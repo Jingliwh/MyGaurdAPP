@@ -42,11 +42,14 @@ public class SplashActivity extends AppCompatActivity {
     private static final int lOADMAIN = 1;
     private static final int SHOWUPDATEDIALOG = 2;
     private int versionCode;
-    private String versionName;
+    private String versionName="黄金版";
     private TextView tv_version_name;
     private  long  startTime;
     private  UriBean  uriBean;
-    private static String[] PERMISSIONS_INTERNET = {Manifest.permission.INTERNET};
+    private static String[] PERMISSIONS_INTERNET = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.INTERNET};
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -55,30 +58,58 @@ public class SplashActivity extends AppCompatActivity {
                         goMainActivity();
                         break;
                     case 2:
-                        AlertDialog.Builder ab= new AlertDialog.Builder(SplashActivity.this);
-                        ab.setTitle("更新");
-                        ab.setMessage(uriBean.getDesc());
-                        ab.setPositiveButton("更新", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                tv_version_name.setText(uriBean.getVersionCode()+"");
-                                Toast.makeText(SplashActivity.this,"更新成功",Toast.LENGTH_LONG).show();
-                                goMainActivity();
-                            }
-                        }).setNegativeButton("取消",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(SplashActivity.this,"下次更新",Toast.LENGTH_LONG).show();
-                                goMainActivity();
-                            }
-                        }).show();
-
+                        newDialog();
                         break;
                     default:
                         break;
                 }
         }
     };
+    public  void  newDialog(){
+        AlertDialog.Builder ab= new AlertDialog.Builder(SplashActivity.this);
+        ab.setTitle("更新");
+        ab.setMessage(uriBean.getDesc());
+        ab.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                downLoadNewVersion();
+
+                tv_version_name.setText(versionName);
+                goMainActivity();
+            }
+        }).setNegativeButton("取消",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(SplashActivity.this,"取消更新",Toast.LENGTH_LONG).show();
+                goMainActivity();
+            }
+        }).show();
+
+    }
+
+    public  void downLoadNewVersion(){
+
+        /*************
+        //下载新版本
+       // RequestParams  httpUtils=new HttpUtils();
+
+        String storg="/sdcard/myguard.apk";
+        httpUtils.download(uriBean.getUri(),storg, new RequestCallBack<File>() {
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo) {
+                Log.i(TAG,""+uriBean.getUri());
+                Toast.makeText(SplashActivity.this,"请求成功",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.i(TAG,""+uriBean.getUri());
+                Toast.makeText(SplashActivity.this,"请求失败",Toast.LENGTH_LONG).show();
+            }
+        });
+         **************/
+    }
     public  void  goMainActivity(){
         Intent intent=new Intent(SplashActivity.this,MainActivity.class);
         startActivity(intent);
@@ -92,7 +123,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     public static void verifyPermissions(Activity activity) {
         // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.INTERNET);
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
@@ -196,7 +227,7 @@ public class SplashActivity extends AppCompatActivity {
                         Log.i(TAG,uriBean.getDesc()+"呵呵");
 
 
-
+                        //httpURLConnection.disconnect();
                         bufferedReader.close();
                         inputStream.close();
                     }
