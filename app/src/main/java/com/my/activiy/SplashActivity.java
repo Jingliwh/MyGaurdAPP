@@ -16,11 +16,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +60,7 @@ public class SplashActivity extends AppCompatActivity {
     //版本名称
     private String versionName;
     private TextView tv_version_name;
+    private ProgressBar progressBar;
     private  long  startTime;
     private  UriBean  uriBean;
     private  int errorCode = -1;
@@ -153,13 +156,21 @@ public class SplashActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onLoading(long l, long l1, boolean b) {
+                    public void onLoading(long total, long current, boolean isUploading) {
+                        //设置进度条可见
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setMax((int)total);
+                        progressBar.setProgress((int)current);
+                        SystemClock.sleep(2000);
+                        //获取进度条的
                         Log.i(TAG, "onLoading()");
+
                     }
 
                     @Override
                     public void onSuccess(File file) {
                         Log.i(TAG, "onSuccess()");
+                        progressBar.setVisibility(View.GONE);
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "guard.apk")), "application/vnd.android.package-archive");
@@ -180,6 +191,8 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onFinished() {
+
+
                         Log.i(TAG, "onFinished()");
                     }
 
@@ -260,6 +273,7 @@ public class SplashActivity extends AppCompatActivity {
     public void initView(){
         //1.找到父布局
         relativeLayout= (RelativeLayout) findViewById(R.id.relay_splash);
+        progressBar=(ProgressBar)findViewById(R.id.pb_download_update);
         tv_version_name=(TextView)findViewById(R.id.tv_splash_version_name);
 
     }
