@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">MyGaurdAPP</string>
     <string name="version_name">亲民版</string>
+    <string name="main_tv_name_text">主界面</string>
+    <string name="password_tv_name_text">设置密码</string>
+    <string name="password">输入密码</string>>
+    <string name="passwordfirm">再次输入</string>
+    <string name="bt_dialog_ok">确定</string>
+    <string name="bt_dialog_cancel">取消</string>
+    <string name="main_tv_name_shezhi">手机防盗设置</string>
+    <string name="main_tv_marquee_text">这是我的学习app,感谢黑马视频教程提供的学习资源，这是项目的主界面........还要加多少字啊</string>
 </resources>

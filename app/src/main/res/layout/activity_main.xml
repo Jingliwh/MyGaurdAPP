@@ -1,25 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.my.activiy.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="这是主界面"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="106dp"/>
-</RelativeLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical"
+                  android:orientation="vertical">
+        <TextView
+        style="@style/main_textview_main"
+        android:text="@string/main_tv_name_text"
+        android:id="@+id/main_tv_main_activity">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+        <com.my.view.MarqueeTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:lines="1"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:text="@string/main_tv_marquee_text"
+            android:id="@+id/main_tv_marquee">
+        </com.my.view.MarqueeTextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView
+                 android:listSelector="@drawable/myseletor"
+                 android:id="@+id/main_grid_function"
+                 android:numColumns="3"
+                 android:verticalSpacing="5dip"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+       </GridView>
+
+    </LinearLayout>
+
+</LinearLayout>
