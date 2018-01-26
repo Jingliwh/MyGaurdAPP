@@ -201,7 +201,7 @@ public class SplashActivity extends AppCompatActivity {
                         inputStream.close();
                     }
                     else
-                        Log.i(TAG,"呵呵连接失败");
+                        Log.i(TAG,"呵呵连接失败！！！");
 
                 } catch (Exception e) {
                     e.printStackTrace();
